@@ -30,6 +30,10 @@ public class Scoreboard {
         System.out.println("No ongoing match found for " + homeTeam + " vs " + awayTeam +"!");
     }
 
+    public void finishMatch(String homeTeam, String awayTeam){
+        matches.removeIf(match -> match.getHomeTeam().equals(homeTeam) && match.getAwayTeam().equals(awayTeam));
+    }
+
 
 }
 

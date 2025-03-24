@@ -9,12 +9,12 @@ public class Match {
     private int awayScore;
     private final LocalDateTime startTime;
 
-    public Match(String homeTeam, String awayTeam) {
+    public Match(String homeTeam, String awayTeam, LocalDateTime startTime ) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.homeScore = 0;
         this.awayScore = 0;
-        this.startTime = LocalDateTime.now();
+        this.startTime = startTime;
     }
 
     public void updateScore(int homeScore, int awayScore) {

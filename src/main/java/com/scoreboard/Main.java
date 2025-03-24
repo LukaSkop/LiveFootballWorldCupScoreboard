@@ -1,17 +1,18 @@
 package com.scoreboard;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         Scoreboard scoreboard = new Scoreboard();
 
-        // Start matches
-        scoreboard.startMatch("Mexico", "Canada");
-        scoreboard.startMatch("Spain", "Brazil");
-        scoreboard.startMatch("Germany", "France");
-        scoreboard.startMatch("Uruguay", "Italy");
-        scoreboard.startMatch("Argentina", "Australia");
+        // Start matches with specific start times
+        scoreboard.startMatch("Mexico", "Canada", LocalDateTime.of(2025, 3, 24, 10, 0, 0, 0));
+        scoreboard.startMatch("Spain", "Brazil", LocalDateTime.of(2025, 3, 24, 9, 0, 0, 0));
+        scoreboard.startMatch("Germany", "France", LocalDateTime.of(2025, 3, 24, 11, 0, 0, 0));
+        scoreboard.startMatch("Uruguay", "Italy", LocalDateTime.of(2025, 3, 24, 8, 0, 0, 0));
+        scoreboard.startMatch("Argentina", "Australia", LocalDateTime.of(2025, 3, 24, 12, 0, 0, 0));
 
         // Update scores
         scoreboard.updateScore("Mexico", "Canada", 0, 5);
@@ -26,15 +27,5 @@ public class Main {
             System.out.println(match);
         }
 
-        // Finish a match
-        scoreboard.finishMatch("Mexico", "Canada");
-
-        // Get updated summary
-        System.out.println("\nAfter finishing Mexico vs Canada:");
-        summary = scoreboard.getSummary();
-        for (String match : summary) {
-            System.out.println(match);
-        }
     }
 }
-

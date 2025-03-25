@@ -25,7 +25,10 @@ public class Scoreboard {
              if (startTime == null) {
                 throw new IllegalArgumentException("Invalid start time: Cannot be null.");
              }
-             if(homeTeam.equals(awayTeam)){
+            if (startTime.isBefore(LocalDateTime.now())) {
+                throw new IllegalArgumentException("Invalid start time: Cannot schedule a match in the past.");
+            }
+            if(homeTeam.equals(awayTeam)){
                  throw new IllegalArgumentException("A team cannot play against itself.");
              }
             }

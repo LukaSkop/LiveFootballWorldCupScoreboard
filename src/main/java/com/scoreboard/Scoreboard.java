@@ -51,10 +51,16 @@ public class Scoreboard {
 
     //Method to finish match
     public void finishMatch(String homeTeam, String awayTeam){
-        boolean removed = matches.removeIf(match -> match.getHomeTeam().equals(homeTeam) && match.getAwayTeam().equals(awayTeam));
-        if (!removed){
-            throw new IllegalArgumentException("No such match is ongoing.");
+        for (Match match : matches) {
+            if (match.getHomeTeam().equals(homeTeam) && match.getAwayTeam().equals(awayTeam)) {
+                if (match.getStartTime().isAfter(LocalDateTime.now())) {
+                    throw new IllegalArgumentException("Cannot finish a match that hasn't started yet.");
+                }
+                matches.remove(match);
+                return;
+            }
         }
+        throw new IllegalArgumentException("No such match is ongoing.");
     }
 
     //Get summary method

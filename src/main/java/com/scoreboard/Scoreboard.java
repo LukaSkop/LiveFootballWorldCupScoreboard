@@ -14,7 +14,9 @@ public class Scoreboard {
     //Method to start match
     public void startMatch(String homeTeam, String awayTeam, LocalDateTime startTime){
         for (Match match : matches){
-             if(match.getHomeTeam().equals(homeTeam) && match.getAwayTeam().equals(awayTeam)){
+             boolean isSameMatch =
+                     (match.getHomeTeam().equals(homeTeam) && match.getAwayTeam().equals(awayTeam)) || (match.getHomeTeam().equals(awayTeam) && match.getAwayTeam().equals(homeTeam));
+             if (isSameMatch) {
                  throw new IllegalArgumentException("Match already exists.");
              }
              if(homeTeam == null || awayTeam == null || homeTeam.trim().isEmpty() || awayTeam.trim().isEmpty()){

@@ -12,7 +12,7 @@ public class ScoreboardTest {
     public void testStartMatch() {
         // Test adding a match
         Scoreboard scoreboard = new Scoreboard();
-        scoreboard.startMatch("Mexico", "Canada", LocalDateTime.of(2025, 4, 26, 10, 0, 0, 0));
+        scoreboard.startMatch("Mexico", "Canada", LocalDateTime.now().minusMinutes(6));
 
         assertEquals(1, scoreboard.getSummary().size());
         assertEquals("Mexico 0 - Canada 0", scoreboard.getSummary().get(0));
@@ -22,7 +22,7 @@ public class ScoreboardTest {
     @Test
     public void testUpdateScore() {
         Scoreboard scoreboard = new Scoreboard();
-        scoreboard.startMatch("Mexico", "Canada", LocalDateTime.of(2025, 4, 24, 10, 0, 0, 0));
+        scoreboard.startMatch("Mexico", "Canada", LocalDateTime.now().minusMinutes(6));
 
         // Score update
         scoreboard.updateScore("Mexico", "Canada", 3, 0);
@@ -39,7 +39,7 @@ public class ScoreboardTest {
     @Test
     public void testFinishMatch() {
         Scoreboard scoreboard = new Scoreboard();
-        scoreboard.startMatch("Mexico", "Canada", LocalDateTime.of(2025, 3, 24, 10, 0, 0, 0));
+        scoreboard.startMatch("Mexico", "Canada", LocalDateTime.now().minusMinutes(6));
 
         scoreboard.finishMatch("Mexico", "Canada");
         assertEquals(0, scoreboard.getSummary().size());
@@ -60,13 +60,13 @@ public class ScoreboardTest {
     @Test
     public void testGetSummary() {
         Scoreboard scoreboard = new Scoreboard();
-        scoreboard.startMatch("Mexico", "Canada", LocalDateTime.of(2025, 4, 26, 10, 0, 0, 0));
+        scoreboard.startMatch("Mexico", "Canada", LocalDateTime.now().minusMinutes(3));
         scoreboard.updateScore("Mexico", "Canada", 3, 2);
 
-        scoreboard.startMatch("Spain", "Brazil", LocalDateTime.of(2025, 4, 26, 9, 0, 0, 0)); // Earlier time
+        scoreboard.startMatch("Spain", "Brazil", LocalDateTime.now().minusMinutes(2)); // Earlier time
         scoreboard.updateScore("Spain", "Brazil", 3, 2);
 
-        scoreboard.startMatch("Germany", "France", LocalDateTime.of(2025, 4, 26, 11, 0, 0, 0));
+        scoreboard.startMatch("Germany", "France", LocalDateTime.now().minusMinutes(1));
         scoreboard.updateScore("Germany", "France", 5, 1);
 
         List<String> summary = scoreboard.getSummary();

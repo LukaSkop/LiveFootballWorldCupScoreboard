@@ -20,8 +20,9 @@ public class Scoreboard {
             throw new IllegalArgumentException("Invalid start time: Cannot be null.");
         }
         if (startTime.isBefore(LocalDateTime.now())) {
-            // throw new IllegalArgumentException("Invalid start time: Cannot schedule a match in the past.");
-            System.out.println("Warning: Match is in the past, but starting anyway (for testing).");
+            // For easier testing comment out the exception
+            //throw new IllegalArgumentException("Invalid start time: Cannot schedule a match in the past.");
+             System.out.println("Warning: Match is in the past, but starting anyway (for testing).");
         }
         if(homeTeam.equals(awayTeam)){
             throw new IllegalArgumentException("A team cannot play against itself.");

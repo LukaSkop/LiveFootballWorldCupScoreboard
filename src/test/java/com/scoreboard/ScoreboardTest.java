@@ -15,7 +15,7 @@ public class ScoreboardTest {
         scoreboard.startMatch("Mexico", "Canada", LocalDateTime.now().minusMinutes(6));
 
         assertEquals(1, scoreboard.getSummary().size());
-        assertEquals("Mexico 0 - Canada 0", scoreboard.getSummary().get(0));
+        assertEquals("Mexico 0 - Canada 0", scoreboard.getSummary().getFirst());
     }
 
 
@@ -26,7 +26,7 @@ public class ScoreboardTest {
 
         // Score update
         scoreboard.updateScore("Mexico", "Canada", 3, 0);
-        assertEquals("Mexico 3 - Canada 0", scoreboard.getSummary().get(0));
+        assertEquals("Mexico 3 - Canada 0", scoreboard.getSummary().getFirst());
 
         // Test updating a non-existent match
         Exception noMatchException = assertThrows(IllegalArgumentException.class, () ->

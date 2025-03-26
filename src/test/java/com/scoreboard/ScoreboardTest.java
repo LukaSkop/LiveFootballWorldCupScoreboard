@@ -77,4 +77,68 @@ public class ScoreboardTest {
         assertEquals("Mexico 3 - Canada 2", summary.get(2)); // Later match appears after
     }
 
+    @Test
+    public void testStartMatchWithInvalidInputs() {
+        Scoreboard scoreboard = new Scoreboard();
+        
+        Exception nullTeams = assertThrows(IllegalArgumentException.class, () ->
+                scoreboard.startMatch(null, "Canada", LocalDateTime.now())
+        );
+        assertEquals("Invalid team names: Names cannot be empty.", nullTeams.getMessage());
+
+        Exception emptyTeams = assertThrows(IllegalArgumentException.class, () ->
+                scoreboard.startMatch(" ", "Canada", LocalDateTime.now())
+        );
+        assertEquals("Invalid team names: Names cannot be empty.", emptyTeams.getMessage());
+
+        Exception sameTeam = assertThrows(IllegalArgumentException.class, () ->
+                scoreboard.startMatch("Mexico", "Mexico", LocalDateTime.now())
+        );
+        assertEquals("A team cannot play against itself.", sameTeam.getMessage());
+
+        scoreboard.startMatch("Mexico", "Canada", LocalDateTime.now().minusMinutes(5));
+        Exception duplicateMatch = assertThrows(IllegalArgumentException.class, () ->
+                scoreboard.startMatch("Mexico", "Canada", LocalDateTime.now())
+        );
+        assertEquals("Match already exists.", duplicateMatch.getMessage());
+    }
+
+    @Test
+    public void testUpdateScoreInvalidCases() {
+        Scoreboard scoreboard = new Scoreboard();
+        scoreboard.startMatch("Mexico", "Canada", LocalDateTime.now().plusMinutes(10)); // Future match
+
+        Exception negativeScore = assertThrows(IllegalArgumentException.class, () ->
+                scoreboard.updateScore("Mexico", "Canada", -1, 2)
+        );
+        assertEquals("Scores cannot be negative.", negativeScore.getMessage());
+
+        Exception futureMatch = assertThrows(IllegalArgumentException.class, () ->
+                scoreboard.updateScore("Mexico", "Canada", 1, 1)
+        );
+        assertEquals("Cannot update score before match start.", futureMatch.getMessage());
+
+        Exception nonExistentMatch = assertThrows(IllegalArgumentException.class, () ->
+                scoreboard.updateScore("Argentina", "Brazil", 2, 2)
+        );
+        assertEquals("No ongoing match found for Argentina vs Brazil!", nonExistentMatch.getMessage());
+    }
+
+    @Test
+    public void testFinishMatchInvalidCases() {
+        Scoreboard scoreboard = new Scoreboard();
+
+        Exception noMatch = assertThrows(IllegalArgumentException.class, () ->
+                scoreboard.finishMatch("Argentina", "Brazil")
+        );
+        assertEquals("No ongoing match found for Argentina vs Brazil!", noMatch.getMessage());
+
+        scoreboard.startMatch("Germany", "France", LocalDateTime.now().plusMinutes(10));
+        Exception futureMatchFinish = assertThrows(IllegalArgumentException.class, () ->
+                scoreboard.finishMatch("Germany", "France")
+        );
+        assertEquals("Cannot finish a match that hasn't started yet.", futureMatchFinish.getMessage());
+    }
+
+
 }

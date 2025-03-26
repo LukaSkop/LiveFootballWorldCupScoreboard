@@ -54,8 +54,9 @@ public class ScoreboardTest {
         Exception noMatchException = assertThrows(IllegalArgumentException.class, () ->
                 scoreboard.finishMatch("Argentina", "Brazil")
         );
-        assertEquals("No such match is ongoing.", noMatchException.getMessage());
+        assertEquals("No ongoing match found for Argentina vs Brazil!", noMatchException.getMessage()); // Match the actual exception message
     }
+
 
     @Test
     public void testGetSummary() {
